@@ -1,20 +1,19 @@
 package com.redes_sociales.modelos;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.redes_sociales.estructura.ListaEnlazada;
 
 public class Isla {
-    private List<Usuario> usuarios;
+    private ListaEnlazada<Usuario> usuarios;
 
     public Isla() {
-        this.usuarios = new ArrayList<>();
+        this.usuarios = new ListaEnlazada<>();
     }
 
-    public List<Usuario> getUsuarios() {
+    public ListaEnlazada<Usuario> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
+    public void setUsuarios(ListaEnlazada<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
 
@@ -28,8 +27,15 @@ public class Isla {
 
     @Override
     public String toString() {
+        StringBuilder strUsuarios = new StringBuilder();
+        for (int i = 0; i < usuarios.size(); i++) {
+            strUsuarios.append(usuarios.get(i).toString());
+            if (i < usuarios.size() - 1) {
+                strUsuarios.append(", ");
+            }
+        }
         return "Isla{" +
-                "usuarios=" + usuarios +
+                "usuarios=" + strUsuarios.toString() +
                 '}';
     }
 }

@@ -1,14 +1,12 @@
 package com.redes_sociales.controladores;
 
+import com.redes_sociales.estructura.ListaEnlazada;
 import com.redes_sociales.modelos.Grafo;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
 
-import java.util.List;
-import java.util.Set;
-
 public class ControladorGrafo {
-    private Grafo grafo;
+     private Grafo grafo;
 
     public ControladorGrafo(Grafo grafo) {
         this.grafo = grafo;
@@ -28,14 +26,14 @@ public class ControladorGrafo {
     }
 
     public void eliminarRelacion(Usuario usuario1, Usuario usuario2) {
-        grafo.removeRelacion(usuario1, usuario2);
+        grafo.eliminarRelacion(usuario1, usuario2);
     }
 
-    public Set<Usuario> obtenerUsuarios() {
+    public ListaEnlazada<Usuario> obtenerUsuarios() {
         return grafo.getUsuarios();
     }
 
-    public List<Relacion> obtenerRelaciones(Usuario usuario) {
+    public ListaEnlazada<Relacion> obtenerRelaciones(Usuario usuario) {
         return grafo.getRelaciones(usuario);
     }
 
@@ -43,13 +41,11 @@ public class ControladorGrafo {
         return grafo.contarIslas();
     }
 
-    public List<Relacion> identificarPuentes() {
-        return grafo.identificarPuentes();
-    }
     public Usuario buscarUsuario(int id) {
-        Set<Usuario> usuarios = grafo.getUsuarios();
+        ListaEnlazada<Usuario> usuarios = grafo.getUsuarios();
 
-        for (Usuario usuario : usuarios) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
             if (usuario.getId() == id) {
                 return usuario;
             }
@@ -57,5 +53,29 @@ public class ControladorGrafo {
 
         return null;
     }
-    
+
+    public ListaEnlazada<Relacion> identificarPuentes() {
+        ListaEnlazada<Relacion> puentes = new ListaEnlazada<>();
+
+        ListaEnlazada<Usuario> usuarios = grafo.getUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
+            ListaEnlazada<Relacion> relaciones = grafo.getRelaciones(usuario);
+            
+            for (int j = 0; j < relaciones.size(); j++) {
+                Relacion relacion = relaciones.get(j);
+                grafo.eliminarRelacion(relacion.getUsuario1(), relacion.getUsuario2());
+                int numIslas = grafo.contarIslas();
+                grafo.agregarRelacion(relacion);
+
+                if (numIslas > grafo.contarIslas()) {
+                    puentes.add(relacion);
+                }
+            }
+        }
+        
+        return puentes;
+    }
+
+
 }

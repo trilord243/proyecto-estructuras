@@ -1,19 +1,17 @@
-
 package com.redes_sociales.vistas;
 
 import com.redes_sociales.controladores.ControladorGrafo;
+import com.redes_sociales.estructura.ListaEnlazada;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Set;
-import java.util.List;
-
 public class VistaGrafo extends javax.swing.JFrame {
     
     
  private ControladorGrafo controladorGrafo;
+    
     private JTextArea textArea;
 
     public VistaGrafo(ControladorGrafo controladorGrafo) {
@@ -37,18 +35,11 @@ public class VistaGrafo extends javax.swing.JFrame {
     }
 
     public void mostrarUsuarios() {
-        Set<Usuario> usuarios = controladorGrafo.obtenerUsuarios();
+        ListaEnlazada<Usuario> usuarios = controladorGrafo.obtenerUsuarios();
         textArea.append("Usuarios en el grafo:\n");
-        for (Usuario usuario : usuarios) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
             textArea.append(usuario.getId() + ", " + usuario.getNombre() + "\n");
-        }
-    }
-
-    public void mostrarPuentes() {
-        List<Relacion> puentes = controladorGrafo.identificarPuentes();
-        textArea.append("Puentes en el grafo:\n");
-        for (Relacion relacion : puentes) {
-            textArea.append(relacion.getUsuario1().getNombre() + " - " + relacion.getUsuario2().getNombre() + "\n");
         }
     }
                           
