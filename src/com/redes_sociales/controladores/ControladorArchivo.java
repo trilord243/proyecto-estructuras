@@ -84,7 +84,7 @@ public class ControladorArchivo {
         throw new IllegalArgumentException("La ruta del archivo no puede ser null");
     }
     try (FileWriter fileWriter = new FileWriter(archivo)) {
-        // Escribe la sección de usuarios
+        
         fileWriter.append("Usuarios");
         fileWriter.append(NEW_LINE_SEPARATOR);
         for (int i = 0; i < grafo.getUsuarios().size(); i++) {
@@ -95,7 +95,7 @@ public class ControladorArchivo {
             fileWriter.append(NEW_LINE_SEPARATOR);
         }
 
-        // Escribe la sección de relaciones
+        
         fileWriter.append("Relaciones");
         fileWriter.append(NEW_LINE_SEPARATOR);
         for (int i = 0; i < grafo.getUsuarios().size(); i++) {

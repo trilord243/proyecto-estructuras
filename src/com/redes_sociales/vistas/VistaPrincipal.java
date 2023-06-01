@@ -127,15 +127,37 @@ public class VistaPrincipal extends JFrame {
         });
         add(mostrarUsuariosButton);
 
-        JButton contarIslasButton = new JButton("Contar Islas");
-        contarIslasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int numIslas = controlador.contarIslas();
-                JOptionPane.showMessageDialog(null, "El número de islas en el grafo es: " + numIslas);
-            }
-        });
-        add(contarIslasButton);
+       // Crea el botón "Contar Islas"
+JButton botonContarIslas = new JButton("Contar Islas");
+add(botonContarIslas);
+
+botonContarIslas.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Pide al usuario que seleccione entre BFS y DFS
+        Object[] options = {"BFS", "DFS"};
+        int n = JOptionPane.showOptionDialog(VistaPrincipal.this,
+            "¿Cómo te gustaría contar las islas?",
+            "Selecciona un método",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]);
+
+        // Obtiene el usuario inicial (esto dependerá de cómo esté implementado tu grafo)
+        Usuario usuarioInicial = grafo.getUsuarios().get(0);
+
+        // Cuenta las islas usando el método seleccionado
+        int numIslas = grafo.contarIslas(n == 0); // Aquí he eliminado el segundo argumento
+
+        // Muestra el número de islas
+        JOptionPane.showMessageDialog(VistaPrincipal.this, "El número de islas es: " + numIslas);
+    }
+});
+
+
+
 
         JButton encontrarPuentesButton = new JButton("Encontrar Puentes");
         encontrarPuentesButton.addActionListener(new ActionListener() {

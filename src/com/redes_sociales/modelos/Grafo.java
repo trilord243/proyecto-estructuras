@@ -1,5 +1,6 @@
 package com.redes_sociales.modelos;
 
+import com.redes_sociales.estructura.Cola;
 import com.redes_sociales.estructura.ListaEnlazada;
 import com.redes_sociales.estructura.Nodo;
 
@@ -71,20 +72,33 @@ public class Grafo {
         return usuarios;
     }
 
-    public int contarIslas() {
-        ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
-        int numIslas = 0;
+   public int contarIslas(boolean useBfs) {
+    int numIslas = 0;
+    ListaEnlazada<Usuario> usuarios = getUsuarios();
+    ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
 
-        for (int i = 0; i < grafo.size(); i++) {
-            Usuario usuario = grafo.get(i).getUsuario();
-            if (!visitados.contains(usuario)) {
-                DFS(usuario, visitados);
-                numIslas++;
+    for (int i = 0; i < usuarios.size(); i++) {
+        Usuario usuario = usuarios.get(i);
+        if (!visitados.contains(usuario)) {
+            ListaEnlazada<Usuario> resultado;
+            if (useBfs) {
+                resultado = bfs(usuario);
+            } else {
+                resultado = dfs(usuario);
             }
+            for (int j = 0; j < resultado.size(); j++) { // Agrega los elementos uno por uno
+                visitados.add(resultado.get(j));
+            }
+            numIslas++;
         }
-
-        return numIslas;
     }
+
+    return numIslas;
+}
+
+
+
+
 
     private void DFS(Usuario usuario, ListaEnlazada<Usuario> visitados) {
         visitados.add(usuario);
@@ -97,6 +111,34 @@ public class Grafo {
             }
         }
     }
+    
+    
+    public ListaEnlazada<Usuario> bfs(Usuario inicio) {
+    ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
+    Cola<Usuario> cola = new Cola<>();
+    cola.enqueue(inicio);
+
+    while (!cola.isEmpty()) {
+        Usuario actual = cola.dequeue();
+        if (!visitados.contains(actual)) {
+            visitados.add(actual);
+            ListaEnlazada<Relacion> relaciones = getRelaciones(actual);
+            for (int i = 0; i < relaciones.size(); i++) {
+                Usuario vecino = relaciones.get(i).getUsuario2().equals(actual) ? relaciones.get(i).getUsuario1() : relaciones.get(i).getUsuario2();
+                cola.enqueue(vecino);
+            }
+        }
+    }
+
+    return visitados;
+}
+
+public ListaEnlazada<Usuario> dfs(Usuario inicio) {
+    ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
+    DFS(inicio, visitados);
+    return visitados;
+}
+
 
     public UsuarioRelacion getUsuarioRelacion(Usuario usuario) {
         for (int i = 0; i < grafo.size(); i++) {
@@ -121,13 +163,13 @@ public class Grafo {
             // Temporalmente elimina la relacion
             eliminarRelacion(relacion.getUsuario1(), relacion.getUsuario2());
 
-            int numIslas = contarIslas();
+            int numIslas = contarIslas(true);
 
             // Restaura la relacion
             agregarRelacion(relacion);
 
             // Si el número de islas aumentó, entonces la relacion es un puente
-            if (numIslas > contarIslas()) {
+            if (numIslas > contarIslas(true)) {
                 puentes.add(relacion);
             }
         }

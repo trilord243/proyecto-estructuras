@@ -1,7 +1,9 @@
 package com.redes_sociales.controladores;
 
+import com.redes_sociales.estructura.Cola;
 import com.redes_sociales.estructura.ListaEnlazada;
 import com.redes_sociales.estructura.Nodo;
+import com.redes_sociales.estructura.Pila;
 import com.redes_sociales.modelos.Grafo;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
@@ -52,7 +54,7 @@ public class ControladorGrafo {
 
 
     public int contarIslas() {
-        return grafo.contarIslas();
+        return grafo.contarIslas(true);
     }
 
     public Usuario buscarUsuario(int id) {
@@ -79,10 +81,10 @@ public class ControladorGrafo {
             for (int j = 0; j < relaciones.size(); j++) {
                 Relacion relacion = relaciones.get(j);
                 grafo.eliminarRelacion(relacion.getUsuario1(), relacion.getUsuario2());
-                int numIslas = grafo.contarIslas();
+                int numIslas = grafo.contarIslas(true);
                 grafo.agregarRelacion(relacion);
 
-                if (numIslas > grafo.contarIslas()) {
+                if (numIslas > grafo.contarIslas(true)) {
                     puentes.add(relacion);
                 }
             }
@@ -100,7 +102,45 @@ public void guardarCambios(ControladorArchivo controladorArchivo) {
     controladorArchivo.guardarGrafoEnArchivo(this.grafo, rutaArchivo);
 }
 
+ public ListaEnlazada<Usuario> bfs(Usuario inicio) {
+        ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
+        Cola<Usuario> cola = new Cola<>();
+        cola.enqueue(inicio);
 
+        while (!cola.isEmpty()) {
+            Usuario actual = cola.dequeue();
+            if (!visitados.contains(actual)) {
+                visitados.add(actual);
+                ListaEnlazada<Relacion> relaciones = obtenerRelaciones(actual);
+                for (int i = 0; i < relaciones.size(); i++) {
+                    Usuario vecino = relaciones.get(i).getUsuario2();
+                    cola.enqueue(vecino);
+                }
+            }
+        }
+
+        return visitados;
+    }
+
+    public ListaEnlazada<Usuario> dfs(Usuario inicio) {
+        ListaEnlazada<Usuario> visitados = new ListaEnlazada<>();
+        Pila<Usuario> pila = new Pila<>();
+        pila.push(inicio);
+
+        while (!pila.isEmpty()) {
+            Usuario actual = pila.pop();
+            if (!visitados.contains(actual)) {
+                visitados.add(actual);
+                ListaEnlazada<Relacion> relaciones = obtenerRelaciones(actual);
+                for (int i = 0; i < relaciones.size(); i++) {
+                    Usuario vecino = relaciones.get(i).getUsuario2();
+                    pila.push(vecino);
+                }
+            }
+        }
+
+        return visitados;
+    }
 }
 
 
