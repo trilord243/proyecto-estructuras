@@ -5,6 +5,9 @@ import com.redes_sociales.estructura.Nodo;
 import com.redes_sociales.modelos.Grafo;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class ControladorGrafo {
      private Grafo grafo;
@@ -12,7 +15,9 @@ public class ControladorGrafo {
     public ControladorGrafo(Grafo grafo) {
         this.grafo = grafo;
     }
-    
+    public Grafo getGrafo() {
+        return this.grafo;
+    }
     public void agregarUsuario(Usuario usuario) {
         grafo.agregarUsuario(usuario);
     }
@@ -87,7 +92,17 @@ public class ControladorGrafo {
     }
     
     
+public void guardarCambios(ControladorArchivo controladorArchivo) {
+    // Obtén la ruta del archivo original
+    String rutaArchivo = controladorArchivo.getUltimaRutaArchivo();
 
+    // Guarda los cambios en el archivo original
+    controladorArchivo.guardarGrafoEnArchivo(this.grafo, rutaArchivo);
+}
 
 
 }
+
+
+
+

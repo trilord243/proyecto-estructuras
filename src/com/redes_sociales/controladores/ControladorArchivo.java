@@ -16,6 +16,10 @@ public class ControladorArchivo {
         return this.ultimaRutaArchivo;
     }
 
+    public void setUltimaRutaArchivo(String ultimaRutaArchivo) {
+        this.ultimaRutaArchivo = ultimaRutaArchivo;
+    }
+
     public Grafo cargarGrafoDesdeArchivo(String archivo) {
         Grafo grafo = new Grafo();
         boolean esRelaciones = false; // Variable to know if we are reading relationships
@@ -76,25 +80,40 @@ public class ControladorArchivo {
     }
 
     public void guardarGrafoEnArchivo(Grafo grafo, String archivo) {
-        try (FileWriter fileWriter = new FileWriter(archivo)) {
-            for (int i = 0; i < grafo.getUsuarios().size(); i++) {
-                Usuario usuario = grafo.getUsuarios().get(i);
-                fileWriter.append(String.valueOf(usuario.getId()));
+    if (archivo == null) {
+        throw new IllegalArgumentException("La ruta del archivo no puede ser null");
+    }
+    try (FileWriter fileWriter = new FileWriter(archivo)) {
+        // Escribe la sección de usuarios
+        fileWriter.append("Usuarios");
+        fileWriter.append(NEW_LINE_SEPARATOR);
+        for (int i = 0; i < grafo.getUsuarios().size(); i++) {
+            Usuario usuario = grafo.getUsuarios().get(i);
+            fileWriter.append(String.valueOf(usuario.getId()));
+            fileWriter.append(DELIMITER);
+            fileWriter.append(usuario.getNombre());
+            fileWriter.append(NEW_LINE_SEPARATOR);
+        }
+
+        // Escribe la sección de relaciones
+        fileWriter.append("Relaciones");
+        fileWriter.append(NEW_LINE_SEPARATOR);
+        for (int i = 0; i < grafo.getUsuarios().size(); i++) {
+            Usuario usuario = grafo.getUsuarios().get(i);
+            for (int j = 0; j < grafo.getRelaciones(usuario).size(); j++) {
+                Relacion relacion = grafo.getRelaciones(usuario).get(j);
+                fileWriter.append(String.valueOf(relacion.getUsuario1().getId()));
                 fileWriter.append(DELIMITER);
-                fileWriter.append(usuario.getNombre());
-
-                for (int j = 0; j < grafo.getRelaciones(usuario).size(); j++) {
-                    Relacion relacion = grafo.getRelaciones(usuario).get(j);
-                    fileWriter.append(DELIMITER);
-                    fileWriter.append(String.valueOf(relacion.getUsuario2().getId()));
-                    fileWriter.append(RELATION_DELIMITER);
-                    fileWriter.append(String.valueOf(relacion.getTiempoAmistad()));
-                }
-
+                fileWriter.append(String.valueOf(relacion.getUsuario2().getId()));
+                fileWriter.append(DELIMITER);
+                fileWriter.append(String.valueOf(relacion.getTiempoAmistad()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+
+    
 }

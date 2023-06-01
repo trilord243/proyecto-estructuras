@@ -40,7 +40,8 @@ public class VistaCargaArchivo extends javax.swing.JFrame {
         File selectedFile = fileChooser.getSelectedFile();
         Grafo grafo = controladorArchivo.cargarGrafoDesdeArchivo(selectedFile.getAbsolutePath());
         if(grafo != null) {
-            VistaPrincipal vistaPrincipal = new VistaPrincipal(grafo);
+            controladorArchivo.setUltimaRutaArchivo(selectedFile.getAbsolutePath());
+            VistaPrincipal vistaPrincipal = new VistaPrincipal(grafo, controladorArchivo);
             vistaPrincipal.setVisible(true);
             this.dispose(); // cierra la ventana de carga de archivos
         } else {
@@ -49,6 +50,7 @@ public class VistaCargaArchivo extends javax.swing.JFrame {
         }
     }
 }
+
 
     
     

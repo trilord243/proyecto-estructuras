@@ -1,5 +1,4 @@
 package com.redes_sociales.vistas;
-
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.redes_sociales.controladores.ControladorGrafo;
 import com.redes_sociales.modelos.Grafo;
@@ -13,11 +12,17 @@ import java.awt.event.ActionListener;
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph; 
+import com.redes_sociales.controladores.ControladorArchivo;
 
 public class VistaPrincipal extends JFrame {
+    private ControladorArchivo controladorArchivo;
      private ControladorGrafo controlador;
+     
 
-    public VistaPrincipal(Grafo grafo) {
+    public VistaPrincipal(Grafo grafo,ControladorArchivo controladorArchivo) {
+        
+       this.controladorArchivo = controladorArchivo;
+        
         controlador = new ControladorGrafo(grafo);
 
         setTitle("Grafo de Red Social");
@@ -26,6 +31,8 @@ public class VistaPrincipal extends JFrame {
         setLocationRelativeTo(null);
 
         setLayout(new FlowLayout());
+        
+
 
         JButton agregarUsuarioButton = new JButton("Agregar Usuario");
         agregarUsuarioButton.addActionListener(new ActionListener() {
@@ -154,6 +161,22 @@ public class VistaPrincipal extends JFrame {
             }
         });
         add(mostrarGrafoButton);
+        
+JButton guardarCambiosButton = new JButton("Guardar Cambios");
+guardarCambiosButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        controlador.guardarCambios(controladorArchivo);
+        JOptionPane.showMessageDialog(null, "Cambios guardados con éxito!");
+    }
+});
+add(guardarCambiosButton);
+
+
+
+
+
+
     }
 
   private void mostrarGrafo() {
@@ -223,6 +246,7 @@ public class VistaPrincipal extends JFrame {
 
         return vertice;
     }
+    
 
     }
     
