@@ -51,7 +51,7 @@ public class ListaEnlazada<T> {
         }
     }
     
-    // Aquí están los nuevos métodos
+   
     public Nodo<T> getPrimero() {
         return head;
     }
@@ -69,5 +69,20 @@ public class ListaEnlazada<T> {
     }
     return false;
 }
+    
+    public int indexOf(T element) {
+    Nodo<T> current = head;
+    int index = 0;
+    while (current != null) {
+        if (current.getData().equals(element)) {
+            return index;
+        }
+        current = current.getNext();
+        index++;
+    }
+    return -1; // Devuelve -1 si el elemento no se encuentra en la lista
+}
+
+    
 
 }

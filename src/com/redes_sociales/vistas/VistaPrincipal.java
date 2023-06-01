@@ -1,5 +1,6 @@
 package com.redes_sociales.vistas;
 
+import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.redes_sociales.controladores.ControladorGrafo;
 import com.redes_sociales.modelos.Grafo;
 import com.redes_sociales.modelos.Usuario;
@@ -9,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import com.mxgraph.layout.mxCompactTreeLayout;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph; 
 
 public class VistaPrincipal extends JFrame {
      private ControladorGrafo controlador;
@@ -140,6 +144,87 @@ public class VistaPrincipal extends JFrame {
             }
         });
         add(encontrarPuentesButton);
+        
+        
+         JButton mostrarGrafoButton = new JButton("Mostrar Grafo");
+        mostrarGrafoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarGrafo();
+            }
+        });
+        add(mostrarGrafoButton);
+    }
+
+  private void mostrarGrafo() {
+    mxGraph graph = new mxGraph();
+    Object parent = graph.getDefaultParent();
+    graph.getModel().beginUpdate();
+
+    try {
+        ListaEnlazada<Usuario> usuarios = controlador.obtenerUsuarios();
+        ListaEnlazada<Object> vertices = new ListaEnlazada<>();
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
+            Object vertice = graph.insertVertex(parent, null, usuario.getNombre(), 0, 0, 80, 30);
+            vertices.add(vertice);
+        }
+
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
+            ListaEnlazada<Relacion> relaciones = controlador.obtenerRelaciones(usuario);
+            for (int j = 0; j < relaciones.size(); j++) {
+                Relacion relacion = relaciones.get(j);
+                Usuario usuario1 = relacion.getUsuario1();
+                Usuario usuario2 = relacion.getUsuario2();
+                int index1 = usuarios.indexOf(usuario1);
+                int index2 = usuarios.indexOf(usuario2);
+                if (index1 != -1 && index2 != -1) {
+                    Object v1 = vertices.get(index1);
+                    Object v2 = vertices.get(index2);
+                    graph.insertEdge(parent, null, "", v1, v2); // Aquí se ha cambiado la etiqueta a una cadena vacía
+                }
+            }
+        }
+    } finally {
+        graph.getModel().endUpdate();
+    }
+
+    mxGraphComponent graphComponent = new mxGraphComponent(graph);
+    mxHierarchicalLayout layout = new mxHierarchicalLayout(graph); // Aquí se ha cambiado el layout a mxHierarchicalLayout
+    layout.execute(parent);
+
+    JFrame frame = new JFrame();
+    frame.getContentPane().add(graphComponent);
+    frame.setSize(1200, 800); // Aquí se ha aumentado el tamaño de la ventana
+    frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setVisible(true);
+}
+
+
+
+
+
+
+
+
+    private Object buscarVertice(ListaEnlazada<Usuario> usuarios, ListaEnlazada<Object> vertices, mxGraph graph, Object parent, Usuario usuario) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).equals(usuario)) {
+                return vertices.get(i);
+            }
+        }
+
+        Object vertice = graph.insertVertex(parent, null, usuario.getNombre(), 0, 0, 80, 30);
+        usuarios.add(usuario);
+        vertices.add(vertice);
+
+        return vertice;
+    }
 
     }
-}
+    
+    
+

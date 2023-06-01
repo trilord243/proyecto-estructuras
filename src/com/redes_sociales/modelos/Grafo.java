@@ -98,7 +98,7 @@ public class Grafo {
         }
     }
 
-    private UsuarioRelacion getUsuarioRelacion(Usuario usuario) {
+    public UsuarioRelacion getUsuarioRelacion(Usuario usuario) {
         for (int i = 0; i < grafo.size(); i++) {
             UsuarioRelacion usuarioRelacion = grafo.get(i);
             if (usuarioRelacion.getUsuario().equals(usuario)) {

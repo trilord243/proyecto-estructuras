@@ -1,6 +1,7 @@
 package com.redes_sociales.controladores;
 
 import com.redes_sociales.estructura.ListaEnlazada;
+import com.redes_sociales.estructura.Nodo;
 import com.redes_sociales.modelos.Grafo;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
@@ -33,9 +34,17 @@ public class ControladorGrafo {
         return grafo.getUsuarios();
     }
 
-    public ListaEnlazada<Relacion> obtenerRelaciones(Usuario usuario) {
-        return grafo.getRelaciones(usuario);
+   public ListaEnlazada<Relacion> obtenerRelaciones(Usuario usuario) {
+    Grafo.UsuarioRelacion usuarioRelacion = grafo.getUsuarioRelacion(usuario);
+    if (usuarioRelacion != null) {
+        return usuarioRelacion.getRelaciones();
+    } else {
+        return new ListaEnlazada<>(); // Devuelve una lista vacía si el usuario no tiene relaciones
     }
+}
+
+
+
 
     public int contarIslas() {
         return grafo.contarIslas();
@@ -76,6 +85,9 @@ public class ControladorGrafo {
         
         return puentes;
     }
+    
+    
+
 
 
 }
