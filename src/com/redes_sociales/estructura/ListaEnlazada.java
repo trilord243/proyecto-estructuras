@@ -84,5 +84,42 @@ public class ListaEnlazada<T> {
 }
 
     
+public void addFirst(T data) {
+    Nodo<T> newNode = new Nodo<>(data);
+    newNode.setNext(head);
+    head = newNode;
+    size++;
+}
+
+public T removeFirst() {
+    if (head == null) {
+        return null;
+    }
+    T data = head.getData();
+    head = head.getNext();
+    size--;
+    return data;
+}
+
+public T getFirst() {
+    return head != null ? head.getData() : null;
+}
+
+public boolean isEmpty() {
+    return size == 0;
+}
+public void addLast(T data) {
+    Nodo<T> newNode = new Nodo<>(data);
+    if (head == null) {
+        head = newNode;
+    } else {
+        Nodo<T> current = head;
+        while (current.getNext() != null) {
+            current = current.getNext();
+        }
+        current.setNext(newNode);
+    }
+    size++;
+}
 
 }

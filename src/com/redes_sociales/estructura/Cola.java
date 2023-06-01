@@ -1,10 +1,7 @@
 package com.redes_sociales.estructura;
 
-import java.util.LinkedList;
-
-
 public class Cola<T> {
-    private LinkedList<T> elementos = new LinkedList<>();
+    private ListaEnlazada<T> elementos = new ListaEnlazada<>();
 
     public void enqueue(T elemento) {
         elementos.addLast(elemento);

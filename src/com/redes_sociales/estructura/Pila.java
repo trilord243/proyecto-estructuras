@@ -1,9 +1,7 @@
 package com.redes_sociales.estructura;
 
-import java.util.LinkedList;
-
 public class Pila<T> {
-    private LinkedList<T> elementos = new LinkedList<>();
+    private ListaEnlazada<T> elementos = new ListaEnlazada<>();
 
     public void push(T elemento) {
         elementos.addFirst(elemento);
@@ -21,5 +19,3 @@ public class Pila<T> {
         return elementos.isEmpty();
     }
 }
-
-
