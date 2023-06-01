@@ -2,7 +2,7 @@ package com.redes_sociales.estructura;
 
 public class ListaEnlazada<T> {
     private Nodo<T> head;
-    private int size = 0; // Agregamos un campo para llevar la cuenta del tamaño de la lista
+    private int size = 0; 
 
     public void add(T data) {
         Nodo<T> newNode = new Nodo<>(data);
@@ -15,7 +15,7 @@ public class ListaEnlazada<T> {
             }
             current.setNext(newNode);
         }
-        size++; // Incrementamos el tamaño cada vez que agregamos un elemento
+        size++; 
     }
 
     public T get(int index) {
@@ -35,14 +35,14 @@ public class ListaEnlazada<T> {
         }
         if (head.getData().equals(data)) {
             head = head.getNext();
-            size--; // Decrementamos el tamaño cada vez que eliminamos un elemento
+            size--; 
             return true;
         } else {
             Nodo<T> current = head;
             while (current.getNext() != null) {
                 if (current.getNext().getData().equals(data)) {
                     current.setNext(current.getNext().getNext());
-                    size--; // Decrementamos el tamaño cada vez que eliminamos un elemento
+                    size--; 
                     return true;
                 }
                 current = current.getNext();
@@ -80,8 +80,7 @@ public class ListaEnlazada<T> {
         current = current.getNext();
         index++;
     }
-    return -1; // Devuelve -1 si el elemento no se encuentra en la lista
-}
+    return -1; }
 
     
 public void addFirst(T data) {

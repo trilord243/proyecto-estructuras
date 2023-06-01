@@ -44,9 +44,6 @@ public class VistaCargaArchivo extends javax.swing.JFrame {
             VistaPrincipal vistaPrincipal = new VistaPrincipal(grafo, controladorArchivo);
             vistaPrincipal.setVisible(true);
             this.dispose(); // cierra la ventana de carga de archivos
-        } else {
-            // Manejar el error, por ejemplo mostrando un JOptionPane
-            JOptionPane.showMessageDialog(this, "El archivo no está en el formato correcto.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

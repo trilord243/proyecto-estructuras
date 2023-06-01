@@ -160,15 +160,15 @@ public ListaEnlazada<Usuario> dfs(Usuario inicio) {
         for (int j = 0; j < relaciones.size(); j++) {
             Relacion relacion = relaciones.get(j);
 
-            // Temporalmente elimina la relacion
+            
             eliminarRelacion(relacion.getUsuario1(), relacion.getUsuario2());
 
             int numIslas = contarIslas(true);
 
-            // Restaura la relacion
+            
             agregarRelacion(relacion);
 
-            // Si el número de islas aumentó, entonces la relacion es un puente
+            
             if (numIslas > contarIslas(true)) {
                 puentes.add(relacion);
             }
