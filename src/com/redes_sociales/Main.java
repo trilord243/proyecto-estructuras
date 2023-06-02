@@ -9,7 +9,21 @@ import com.redes_sociales.modelos.Grafo;
 import java.io.File;
 import javax.swing.*;
 
+
+/**
+ * Esta es la clase principal que inicia la aplicación de la red social.
+ * Crea una instancia del ControladorArchivo y la VistaCargaArchivo, y muestra la interfaz de usuario para cargar un archivo.
+ * También maneja el evento de cierre de la ventana de la VistaCargaArchivo, cargando el grafo desde el último archivo utilizado y mostrando las vistas del grafo y de la isla.
+ */
+
 public class Main {
+    
+    
+       /**
+     * El punto de entrada principal para la aplicación.
+     *
+     * @param args los argumentos de la línea de comandos
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ControladorArchivo controladorArchivo = new ControladorArchivo();

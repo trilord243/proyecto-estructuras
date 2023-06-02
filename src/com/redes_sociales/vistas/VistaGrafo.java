@@ -7,12 +7,25 @@ import com.redes_sociales.modelos.Relacion;
 
 import javax.swing.*;
 import java.awt.*;
+
+
+/**
+ * Esta clase representa la vista del grafo en la aplicación de redes sociales.
+ * Muestra una lista de todos los usuarios en el grafo de la red social.
+ */
 public class VistaGrafo extends javax.swing.JFrame {
     
     
  private ControladorGrafo controladorGrafo;
     
     private JTextArea textArea;
+    
+    
+        /**
+     * Crea una nueva vista del grafo con un controlador de grafo específico.
+     *
+     * @param controladorGrafo el controlador de grafo que se utilizará para obtener los datos del grafo.
+     */
 
     public VistaGrafo(ControladorGrafo controladorGrafo) {
         this.controladorGrafo = controladorGrafo;
@@ -33,7 +46,9 @@ public class VistaGrafo extends javax.swing.JFrame {
 
         initComponents();
     }
-
+       /**
+     * Muestra todos los usuarios en el grafo de la red social en el área de texto de la vista.
+     */
     public void mostrarUsuarios() {
         ListaEnlazada<Usuario> usuarios = controladorGrafo.obtenerUsuarios();
         textArea.append("Usuarios en el grafo:\n");

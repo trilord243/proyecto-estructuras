@@ -14,6 +14,14 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph; 
 import com.redes_sociales.controladores.ControladorArchivo;
 
+
+
+/**
+ * Esta clase representa la vista principal de la aplicación de redes sociales.
+ * Proporciona una interfaz de usuario para interactuar con el grafo de la red social.
+ */
+
+
 public class VistaPrincipal extends JFrame {
     private ControladorArchivo controladorArchivo;
      private ControladorGrafo controlador;
@@ -35,6 +43,7 @@ public class VistaPrincipal extends JFrame {
 
 
         JButton agregarUsuarioButton = new JButton("Agregar Usuario");
+        agregarUsuarioButton.setToolTipText("Permite agregar un nuevo usuario a la red social.");
         agregarUsuarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,6 +66,9 @@ public class VistaPrincipal extends JFrame {
         add(agregarUsuarioButton);
 
         JButton agregarRelacionButton = new JButton("Agregar Relación");
+        agregarRelacionButton.setToolTipText("Permite agregar una relación entre dos usuarios.");
+        
+
         agregarRelacionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +98,8 @@ public class VistaPrincipal extends JFrame {
         add(agregarRelacionButton);
 
         JButton eliminarUsuarioButton = new JButton("Eliminar Usuario");
+        eliminarUsuarioButton.setToolTipText("Permite eliminar un usuario de la red social.");
+        
         eliminarUsuarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +123,8 @@ public class VistaPrincipal extends JFrame {
         add(eliminarUsuarioButton);
 
         JButton mostrarUsuariosButton = new JButton("Mostrar Usuarios");
+        mostrarUsuariosButton.setToolTipText("Muestra todos los usuarios en la red social.");
+
         mostrarUsuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,6 +145,7 @@ public class VistaPrincipal extends JFrame {
 
        // Crea el botón "Contar Islas"
 JButton botonContarIslas = new JButton("Contar Islas");
+botonContarIslas.setToolTipText("Cuenta el número de islas en el grafo.");
 add(botonContarIslas);
 
 botonContarIslas.addActionListener(new ActionListener() {
@@ -160,6 +177,7 @@ botonContarIslas.addActionListener(new ActionListener() {
 
 
         JButton encontrarPuentesButton = new JButton("Encontrar Puentes");
+        encontrarPuentesButton.setToolTipText("Identifica los puentes en el grafo.");
         encontrarPuentesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,6 +194,7 @@ botonContarIslas.addActionListener(new ActionListener() {
         
         
          JButton mostrarGrafoButton = new JButton("Mostrar Grafo");
+         mostrarGrafoButton.setToolTipText("Muestra una representación visual del grafo.");
         mostrarGrafoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -185,6 +204,7 @@ botonContarIslas.addActionListener(new ActionListener() {
         add(mostrarGrafoButton);
         
 JButton guardarCambiosButton = new JButton("Guardar Cambios");
+guardarCambiosButton.setToolTipText("Guarda los cambios realizados en el grafo.");
 guardarCambiosButton.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -200,7 +220,10 @@ add(guardarCambiosButton);
 
 
     }
-
+    
+    /**
+     * Muestra una representación visual del grafo en una nueva ventana.
+     */
   private void mostrarGrafo() {
     mxGraph graph = new mxGraph();
     Object parent = graph.getDefaultParent();
@@ -254,7 +277,16 @@ add(guardarCambiosButton);
 
 
 
-
+      /**
+     * Busca un vértice en el grafo. Si no se encuentra, se crea un nuevo vértice y se añade al grafo.
+     *
+     * @param usuarios la lista de usuarios en el grafo.
+     * @param vertices la lista de vértices en el grafo.
+     * @param graph el grafo.
+     * @param parent el objeto padre en el grafo.
+     * @param usuario el usuario cuyo vértice se está buscando.
+     * @return el vértice del usuario.
+     */
     private Object buscarVertice(ListaEnlazada<Usuario> usuarios, ListaEnlazada<Object> vertices, mxGraph graph, Object parent, Usuario usuario) {
         for (int i = 0; i < usuarios.size(); i++) {
             if (usuarios.get(i).equals(usuario)) {
@@ -273,4 +305,3 @@ add(guardarCambiosButton);
     }
     
     
-

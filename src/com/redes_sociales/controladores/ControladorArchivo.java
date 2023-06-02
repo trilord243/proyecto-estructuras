@@ -7,29 +7,57 @@ import com.redes_sociales.estructura.ListaEnlazada;
 import java.io.*;
 import javax.swing.JOptionPane;
 
+
+/**
+ * Esta clase se encarga de manejar las operaciones de archivo para el grafo de la red social.
+ * Puede cargar un grafo desde un archivo y guardar un grafo en un archivo.
+ */
+
 public class ControladorArchivo {
     private static final String DELIMITER = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
     private static final String RELATION_DELIMITER = ";";
     private String ultimaRutaArchivo;
+    
+    
+    /**
+     * Obtiene la última ruta de archivo utilizada.
+     *
+     * @return la última ruta de archivo utilizada.
+     */
+
 
     public String getUltimaRutaArchivo() {
         return this.ultimaRutaArchivo;
     }
 
+    /**
+     * Establece la última ruta de archivo utilizada.
+     *
+     * @param ultimaRutaArchivo la última ruta de archivo a establecer.
+     */
     public void setUltimaRutaArchivo(String ultimaRutaArchivo) {
         this.ultimaRutaArchivo = ultimaRutaArchivo;
     }
+    
+    
+    /**
+     * Carga un grafo desde un archivo txt.validando el formato de entrada 
+     * 
+     *
+     * @param archivo la ruta del archivo desde el que se cargará el grafo.
+     * @return el grafo cargado desde el archivo.
+     */
 
   public Grafo cargarGrafoDesdeArchivo(String archivo) {
     Grafo grafo = new Grafo();
-    boolean esRelaciones = false; // Variable to know if we are reading relationships
-    ListaEnlazada<Usuario> listaUsuarios = new ListaEnlazada<>(); // To search users by id
+    boolean esRelaciones = false; 
+    ListaEnlazada<Usuario> listaUsuarios = new ListaEnlazada<>(); 
 
     try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
         String linea;
         while ((linea = br.readLine()) != null) {
-            // Check if the line is a header
+            
             if (linea.equals("Usuarios") || linea.equals("Relaciones")) {
                 if(linea.equals("Relaciones")){
                     esRelaciones = true;
@@ -39,27 +67,27 @@ public class ControladorArchivo {
 
             String[] campos = linea.split(DELIMITER);
 
-            // Check if the line has the correct format
+            
             if ((!esRelaciones && campos.length != 2) || (esRelaciones && campos.length != 3)) {
                 throw new IOException("El archivo no está en el formato correcto. Cada línea debe tener 2 campos (para usuarios) o 3 campos (para relaciones).");
             }
 
             if(!esRelaciones){
-                // Create and add user to the graph
-                int id = Integer.parseInt(campos[0].trim());  // Trim string before parsing
-                String nombreUsuario = campos[1].trim(); // Trim string
+                
+                int id = Integer.parseInt(campos[0].trim());
+                String nombreUsuario = campos[1].trim();
 
                 Usuario usuario = new Usuario(id, nombreUsuario);
                 grafo.agregarUsuario(usuario);
-                listaUsuarios.add(usuario); // Save user in the list
+                listaUsuarios.add(usuario);
             } else {
-                // Create and add relationships to the graph
-                int idUsuario1 = Integer.parseInt(campos[0].trim()); // Trim string before parsing
-                int idUsuario2 = Integer.parseInt(campos[1].trim()); // Trim string before parsing
-                int tiempoAmistad = Integer.parseInt(campos[2].trim()); // Trim string before parsing
+                
+                int idUsuario1 = Integer.parseInt(campos[0].trim()); 
+                int idUsuario2 = Integer.parseInt(campos[1].trim()); 
+                int tiempoAmistad = Integer.parseInt(campos[2].trim()); 
 
-                Usuario usuario1 = null; // Search user1 by id
-                Usuario usuario2 = null; // Search user2 by id
+                Usuario usuario1 = null; 
+                Usuario usuario2 = null; 
                 for(int i = 0; i < listaUsuarios.size(); i++){
                     if(listaUsuarios.get(i).getId() == idUsuario1){
                         usuario1 = listaUsuarios.get(i);
@@ -88,7 +116,15 @@ public class ControladorArchivo {
 }
 
 
-
+    
+  
+   /**
+     * 
+     *Guarda los cambios que se le hicieron al grafo 
+     *
+     * @param grafo el grafo a guardar.
+     * @param archivo la ruta del archivo en el que se guardará con sus modificaciones .
+     */
 
     public void guardarGrafoEnArchivo(Grafo grafo, String archivo) {
     if (archivo == null) {
