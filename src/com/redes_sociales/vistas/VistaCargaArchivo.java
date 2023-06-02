@@ -33,20 +33,23 @@ public class VistaCargaArchivo extends javax.swing.JFrame {
         this.add(button, BorderLayout.CENTER);
     }
 
-    private void cargarArchivo() {
+   private void cargarArchivo() {
     JFileChooser fileChooser = new JFileChooser();
     int returnValue = fileChooser.showOpenDialog(null);
     if (returnValue == JFileChooser.APPROVE_OPTION) {
         File selectedFile = fileChooser.getSelectedFile();
-        Grafo grafo = controladorArchivo.cargarGrafoDesdeArchivo(selectedFile.getAbsolutePath());
-        if(grafo != null) {
-            controladorArchivo.setUltimaRutaArchivo(selectedFile.getAbsolutePath());
-            VistaPrincipal vistaPrincipal = new VistaPrincipal(grafo, controladorArchivo);
-            vistaPrincipal.setVisible(true);
-            this.dispose(); // cierra la ventana de carga de archivos
+        if (selectedFile != null) {
+            Grafo grafo = controladorArchivo.cargarGrafoDesdeArchivo(selectedFile.getAbsolutePath());
+            if(grafo != null) {
+                controladorArchivo.setUltimaRutaArchivo(selectedFile.getAbsolutePath());
+                VistaPrincipal vistaPrincipal = new VistaPrincipal(grafo, controladorArchivo);
+                vistaPrincipal.setVisible(true);
+                this.dispose(); // cierra la ventana de carga de archivos
+            }
         }
     }
 }
+
 
 
     
