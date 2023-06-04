@@ -10,10 +10,10 @@ Primero se clona el repositorio de githuby se abre en el IDE de [Netbeans](https
 
 **Nota**: Si sale un error de compatiblidad de JDK haga click al boton de ResolveProblems y esoja el JDK por defecto (Para este proyecto se uso el JDK 17)
 
-[!Error](./images/error.png)
+![Error](./images/error.png)
 
 Una vez clonado el repositorio haga click en el boton RUN en la aplicacion main.
-[!boton](./images/boton.png)
+![boton](./images/boton.png)
 
 Luego saldra una ventana con esta pantalla
 
@@ -74,42 +74,42 @@ Una vez suba el archivo le saldra la pantalla principal donde tendra diferentes 
 
 ##### Agregar usuario
 
-[!AddUser](./images/AgregarUsuario.png)
+![AddUser](./images/AgregarUsuario.png)
 
 Esta opcion permite agregar usuario al archivo, primero tendra que ingresar el id del usuario (Tiene que ser un numero entero) y luego el nombre del usuario.
 
 ##### Agregar Relacion
 
-[!AddRelation](./images/Relacion.png)
+![AddRelation](./images/Relacion.png)
 
 Esta opcion permite crear una nueva relacion de 2 usuarios, primero tiene que ingresar el id de un usuario, luego el id del otro usuario e indicar el tiempo de amistad que tienen
 
 ##### Mostrar Usuario
 
-[!ShowUser](./images/Mostar.png)
+![ShowUser](./images/Mostar.png)
 
 Esta opcion permite visualizar todos los usuarios que hay en el archivo.
 
 ##### Contar Islas
 
-[!Islas](./images/islas.png)
+![Islas](./images/islas.png)
 
 Esta opcion cuenta las islas que se encuentran en el archivo y tiene 2 opciones de como contarlas. Ya sea por el algoritmo DFS (Depth First Search) o por BFS (breadth-first search).
 
 ##### Encontrar puentes
 
-[!puentes](./images/puentes.png)
+![puentes](./images/puentes.png)
 
 Esta opcion permite encontrar la cantidad de puentes que hay en el archivo
 
 ##### Mostrar Grafo
 
-[!graph](./images/grafico.png)
+![graph](./images/grafico.png)
 
 Esta opcion permite mostrar visualmente el grafo que existe en el archivo. Con sus usuarios y relaciones
 
 ##### Guardar Cambios
 
-[!save](./images/save.png)
+![save](./images/save.png)
 
 Esta opcion guarda todos los cambios que se hiceron el el archivo
