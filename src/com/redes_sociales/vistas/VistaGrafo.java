@@ -1,20 +1,31 @@
-
 package com.redes_sociales.vistas;
 
 import com.redes_sociales.controladores.ControladorGrafo;
+import com.redes_sociales.estructura.ListaEnlazada;
 import com.redes_sociales.modelos.Usuario;
 import com.redes_sociales.modelos.Relacion;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Set;
-import java.util.List;
 
+
+/**
+ * Esta clase representa la vista del grafo en la aplicación de redes sociales.
+ * Muestra una lista de todos los usuarios en el grafo de la red social.
+ */
 public class VistaGrafo extends javax.swing.JFrame {
     
     
  private ControladorGrafo controladorGrafo;
+    
     private JTextArea textArea;
+    
+    
+        /**
+     * Crea una nueva vista del grafo con un controlador de grafo específico.
+     *
+     * @param controladorGrafo el controlador de grafo que se utilizará para obtener los datos del grafo.
+     */
 
     public VistaGrafo(ControladorGrafo controladorGrafo) {
         this.controladorGrafo = controladorGrafo;
@@ -35,20 +46,15 @@ public class VistaGrafo extends javax.swing.JFrame {
 
         initComponents();
     }
-
+       /**
+     * Muestra todos los usuarios en el grafo de la red social en el área de texto de la vista.
+     */
     public void mostrarUsuarios() {
-        Set<Usuario> usuarios = controladorGrafo.obtenerUsuarios();
+        ListaEnlazada<Usuario> usuarios = controladorGrafo.obtenerUsuarios();
         textArea.append("Usuarios en el grafo:\n");
-        for (Usuario usuario : usuarios) {
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario usuario = usuarios.get(i);
             textArea.append(usuario.getId() + ", " + usuario.getNombre() + "\n");
-        }
-    }
-
-    public void mostrarPuentes() {
-        List<Relacion> puentes = controladorGrafo.identificarPuentes();
-        textArea.append("Puentes en el grafo:\n");
-        for (Relacion relacion : puentes) {
-            textArea.append(relacion.getUsuario1().getNombre() + " - " + relacion.getUsuario2().getNombre() + "\n");
         }
     }
                           

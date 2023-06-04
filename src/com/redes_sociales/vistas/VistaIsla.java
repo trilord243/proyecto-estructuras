@@ -4,12 +4,25 @@ import com.redes_sociales.controladores.ControladorGrafo;
 
 import javax.swing.*;
 import java.awt.*;
+
+/**
+ * Esta clase representa la vista de las islas en la aplicación de redes sociales.
+ * Muestra el número de islas en el grafo de la red social.
+ */
 public class VistaIsla extends javax.swing.JFrame {
     
     
     
       private ControladorGrafo controladorGrafo;
     private JTextArea textArea;
+    
+    
+        /**
+     * Crea una nueva vista de isla con un controlador de grafo específico.
+     *
+     * @param controladorGrafo el controlador de grafo que se utilizará para obtener los datos del grafo.
+     */
+
 
     public VistaIsla(ControladorGrafo controladorGrafo) {
         this.controladorGrafo = controladorGrafo;
@@ -30,6 +43,11 @@ public class VistaIsla extends javax.swing.JFrame {
 
         initComponents();
     }
+    
+    
+        /**
+     * Muestra el número de islas en el grafo de la red social en el área de texto de la vista.
+     */
 
     public void mostrarIslas() {
         int numIslas = controladorGrafo.contarIslas();
