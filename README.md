@@ -17,7 +17,7 @@ Una vez clonado el repositorio haga click en el boton RUN en la aplicacion main.
 
 Luego saldra una ventana con esta pantalla
 
-[!pantalla1](./images/Untitled.png)
+![pantalla1](./images/Untitled.png)
 
 Le va a dar click en el boton de Subir archivo txt.
 
